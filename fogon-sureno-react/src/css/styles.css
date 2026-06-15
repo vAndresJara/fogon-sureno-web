@@ -1,0 +1,424 @@
+/* ==========================================================================
+   1. RESET PROFESIONAL
+   ========================================================================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ==========================================================================
+   2. ESTILOS GLOBALES
+   ========================================================================== */
+body {
+    /* Aquí llamamos a la variable del archivo variables.css */
+    background-color: var(--neutro-claro); 
+    color: var(--neutro-oscuro);
+    font-family: var(--fuente-cuerpo);
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--fuente-titulos);
+    color: var(--color-principal);
+    line-height: 1.2;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+    height: auto;
+}
+
+/* ==========================================================================
+   3. COMPONENTE: HEADER & NAVEGACIÓN (Barra Verde)
+   ========================================================================== */
+header {
+    background-color: var(--color-principal);
+    color: var(--neutro-claro);
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;            
+    padding: var(--espacio-sm) var(--espacio-md);
+}
+
+header nav ul {
+    display: flex;
+    list-style: none;
+    gap: var(--espacio-sm); 
+}
+
+/* ==========================================================================
+   4. SECCIÓN: INICIO (HERO)
+   ========================================================================== */
+#inicio {
+    background-color: var(--color-principal); /* Fondo verde provisional (luego le pondremos imagen) */
+    color: var(--neutro-claro);
+    text-align: center;
+    padding: var(--espacio-xl) var(--espacio-md); /* Espaciado generoso arriba/abajo y a los lados */
+}
+
+#inicio h2 {
+    color: var(--neutro-claro); /* Cambiamos el título a claro para que resalte en el fondo verde */
+    font-size: 2.5rem;          /* Texto grande e importante */
+    margin-bottom: var(--espacio-sm);
+}
+
+#inicio p {
+    font-size: 1.2rem;
+    max-width: 600px;           /* Limitamos el ancho del párrafo para que no se estire en pantallas grandes */
+    margin: 0 auto var(--espacio-md) auto; /* Centra el bloque del párrafo y le da espacio abajo */
+}
+
+/* El botón "Ver la Carta" */
+#inicio a {
+    display: inline-block;
+    background-color: var(--color-acento); /* Color fuego/oro viejo */
+    color: var(--neutro-oscuro);
+    font-weight: bold;
+    padding: var(--espacio-sm) var(--espacio-md);
+    border-radius: var(--borde-radio);
+    box-shadow: var(--sombra-suave);
+    transition: background-color 0.3s ease; /* Transición suave para cuando pasemos el mouse */
+}
+
+/* Efecto al pasar el mouse por encima del botón (Hover) */
+#inicio a:hover {
+    background-color: #b45309; /* Un tono un poco más oscuro que el acento */
+    color: var(--neutro-claro);
+}
+/* ==========================================================================
+   5. SECCIÓN: NOSOTROS
+   ========================================================================== */
+#nosotros {
+    padding: var(--espacio-xl) var(--espacio-md);
+    text-align: center;
+    max-width: 800px;       /* Evita que el texto de la historia se estire hacia los lados */
+    margin: 0 auto;         /* Centra todo el bloque de la sección en la pantalla */
+}
+
+#nosotros h2 {
+    margin-bottom: var(--espacio-sm);
+    position: relative;
+    display: inline-block;
+}
+
+/* Una pequeña línea decorativa debajo del título "Nuestra Historia" */
+#nosotros h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: var(--color-secundario); /* Color greda/terracota */
+    margin: var(--espacio-xs) auto 0 auto;
+    border-radius: var(--borde-radio);
+}
+
+#nosotros p {
+    font-size: 1.1rem;
+    color: var(--neutro-oscuro);
+}
+
+/* ==========================================================================
+   6. SECCIÓN: NUESTRO MENÚ (Uso de CSS Grid)
+   ========================================================================== */
+#menu {
+    padding: var(--espacio-xl) var(--espacio-md);
+    background-color: #f3efe9; /* Un tono crema un poquito más oscuro para diferenciar secciones */
+    text-align: center;
+}
+
+#menu h2 {
+    margin-bottom: var(--espacio-xs);
+}
+
+#menu > p {
+    margin-bottom: var(--espacio-lg);
+    color: var(--neutro-gris);
+}
+
+/* --- Estilos para la Búsqueda --- */
+.busqueda-container {
+    margin-bottom: var(--espacio-sm);
+}
+
+#busqueda-input {
+    padding: var(--espacio-xs) var(--espacio-md);
+    border-radius: 25px;
+    border: 2px solid var(--color-principal);
+    width: 100%;
+    max-width: 400px;
+    font-family: inherit;
+    outline: none;
+    transition: box-shadow 0.3s ease;
+}
+
+#busqueda-input:focus {
+    box-shadow: 0 0 8px rgba(44, 74, 62, 0.3);
+}
+
+/* --- Estilos para los Filtros --- */
+.filtros-container {
+    margin-bottom: var(--espacio-lg);
+    display: flex;
+    justify-content: center;
+    gap: var(--espacio-sm);
+    flex-wrap: wrap;
+}
+
+.btn-filtro {
+    background-color: transparent;
+    border: 2px solid var(--color-principal);
+    color: var(--color-principal);
+    padding: var(--espacio-xs) var(--espacio-md);
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-filtro:hover, .btn-filtro.activo {
+    background-color: var(--color-principal);
+    color: var(--neutro-claro);
+}
+
+/* Contenedor de los platos (Grid) */
+#menu .plato-container {
+    display: grid;
+    /* Crea columnas automáticas que se adaptan solas si la pantalla es chica o grande */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--espacio-md); /* Espacio controlado entre tarjetas */
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Tarjeta individual de cada plato */
+.plato {
+    background-color: var(--neutro-claro);
+    padding: var(--espacio-md);
+    border-radius: var(--borde-radio);
+    box-shadow: var(--sombra-suave);
+    text-align: left; /* El texto dentro de la tarjeta se lee mejor alineado a la izquierda */
+    border-top: 4px solid var(--color-secundario); /* Detalle elegante color greda arriba */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.plato-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--espacio-xs);
+}
+
+.btn-favorito {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #ccc;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.btn-favorito.activo {
+    color: #e11d48;
+    transform: scale(1.1);
+}
+
+.plato-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: var(--espacio-sm);
+}
+
+.btn-agregar {
+    background-color: var(--color-principal);
+    color: var(--neutro-claro);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--borde-radio);
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-agregar:hover {
+    background-color: var(--color-secundario);
+}
+
+.cart-indicator {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--color-secundario);
+    padding: 2px 10px;
+    border-radius: 20px;
+}
+
+.plato h3 {
+    color: var(--color-principal);
+    margin-bottom: var(--espacio-xs);
+    font-size: 1.3rem;
+}
+
+.plato p {
+    font-size: 0.95rem;
+    color: var(--neutro-oscuro);
+}
+/* ==========================================================================
+   7. SECCIÓN: CONTACTO
+   ========================================================================== */
+#contacto {
+    padding: var(--espacio-xl) var(--espacio-md);
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#contacto h2 {
+    margin-bottom: var(--espacio-lg);
+}
+
+/* Contenedor flexible para poner la info lado a lado */
+#contacto .contacto-flex {
+    display: flex;
+    flex-wrap: wrap;       /* Si la pantalla es muy chica (celular), se bajan automáticamente */
+    gap: var(--espacio-xl);
+    justify-content: center;
+}
+
+.info-contacto {
+    flex: 1;
+    min-width: 280px;      /* Tamaño mínimo para que no se aplasten */
+    max-width: 450px;
+    background-color: var(--neutro-claro);
+    padding: var(--espacio-md);
+    border-radius: var(--borde-radio);
+    box-shadow: var(--sombra-suave);
+    text-align: center;
+}
+
+.info-contacto h3 {
+    margin-bottom: var(--espacio-sm);
+    color: var(--color-principal);
+}
+
+.info-contacto p {
+    color: var(--neutro-oscuro);
+    font-size: 1rem;
+}
+
+/* ==========================================================================
+   8. FOOTER (PIE DE PÁGINA)
+   ========================================================================== */
+footer {
+    background-color: var(--neutro-oscuro);
+    color: var(--neutro-claro);
+    text-align: center;
+    padding: var(--espacio-lg) var(--espacio-md);
+    margin-top: var(--espacio-xl);
+}
+
+footer p:first-child {
+    font-weight: bold;
+    margin-bottom: var(--espacio-xs);
+}
+
+footer p:last-child {
+    font-size: 0.85rem;
+    color: var(--neutro-gris);
+}
+
+/* --- Controles de Cantidad en el Carrito --- */
+.cart-quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.btn-qty {
+    background-color: var(--color-secundario);
+    color: white;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    transition: opacity 0.2s;
+}
+
+.btn-qty:hover {
+    opacity: 0.8;
+}
+
+.qty-value {
+    font-weight: bold;
+    min-width: 20px;
+    text-align: center;
+}
+
+/* --- Estilos de la Página del Carrito --- */
+.cart-page-container {
+    padding: var(--espacio-xl) var(--espacio-md);
+    max-width: 900px;
+    margin: 0 auto;
+    min-height: 70vh;
+}
+
+.cart-list {
+    display: grid;
+    gap: var(--espacio-lg);
+    grid-template-columns: 1fr 300px;
+    align-items: start;
+    margin-top: var(--espacio-md);
+}
+
+@media (max-width: 768px) {
+    .cart-list { grid-template-columns: 1fr; }
+}
+
+.cart-items-full {
+    background: white;
+    border-radius: var(--borde-radio);
+    padding: var(--espacio-md);
+    box-shadow: var(--sombra-suave);
+}
+
+.cart-item-full {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--espacio-sm) 0;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-summary {
+    background: #fff;
+    padding: var(--espacio-md);
+    border-radius: var(--borde-radio);
+    box-shadow: var(--sombra-suave);
+    border-top: 4px solid var(--color-acento);
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin: var(--espacio-sm) 0;
+    font-size: 1.2rem;
+}
+
+.cart-empty { text-align: center; grid-column: 1 / -1; padding: var(--espacio-xl); }
