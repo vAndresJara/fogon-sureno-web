@@ -12,6 +12,7 @@ function App() {
   // Estados
   const [busqueda, setBusqueda] = useState('');
   const [categoria, setCategoria] = useState('todos');
+  const [platoSeleccionado, setPlatoSeleccionado] = useState(null);
   const [favoritos, setFavoritos] = useState(() => {
     const save = localStorage.getItem('favoritos-fogon');
     return save ? JSON.parse(save) : [];
@@ -93,13 +94,19 @@ function App() {
 
               <section id="nosotros">
                 <h2>Nuestra Historia</h2>
-                <p>Nacidos con el propósito de traer las recetas más rústicas, sabrosas y tradicionales directamente a tu mesa.</p>
+                <p>
+                  Nacidos en el corazón del sur, nuestra cocina rinde homenaje a las tradiciones de nuestra tierra. 
+                  Desde el calor del fogón de leña hasta la selección de los ingredientes más frescos de la zona, 
+                  buscamos rescatar los sabores que han unido a las familias por generaciones.
+                </p>
+                <p>Cada receta es un legado de identidad y amor por el arte culinario rústico, traído con pasión directamente a tu mesa.</p>
               </section>
             
               <section id="menu">
                 <h2>Especialidades de la Casa</h2>
                 <div className="busqueda-container">
                   <input 
+                    id="busqueda-input"
                     type="text" 
                     placeholder="Busca tu plato favorito..." 
                     value={busqueda}
@@ -108,7 +115,7 @@ function App() {
                 </div>
 
                 <div className="filtros-container">
-                  {['todos', 'carnes', 'mariscos', 'postres', 'favoritos'].map(cat => (
+                  {['todos', 'tablas', 'carnes', 'mariscos', 'postres', 'bebidas', 'favoritos'].map(cat => (
                     <button 
                       key={cat}
                       className={`btn-filtro ${categoria === cat ? 'activo' : ''}`}
@@ -127,6 +134,7 @@ function App() {
                       esFavorito={favoritos.includes(plato.id)} 
                       toggleFavorito={toggleFavorito}
                       addToCart={addToCart}
+                      onVerDetalle={() => setPlatoSeleccionado(plato)}
                     />
                   ))}
                 </div>
@@ -158,6 +166,24 @@ function App() {
             />
           } />
         </Routes>
+
+        {/* Ventana Modal de Detalle */}
+        {platoSeleccionado && (
+          <div className="modal-overlay" onClick={() => setPlatoSeleccionado(null)}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <button className="modal-close" onClick={() => setPlatoSeleccionado(null)}>&times;</button>
+              <img src={platoSeleccionado.imagen} alt={platoSeleccionado.nombre} />
+              <div className="modal-info">
+                <h2>{platoSeleccionado.nombre}</h2>
+                <p>{platoSeleccionado.descripcion}</p>
+                <div className="modal-footer">
+                  <strong>Precio: ${platoSeleccionado.precio.toLocaleString('es-CL')}</strong>
+                  <button className="btn-agregar" onClick={() => { addToCart(platoSeleccionado); setPlatoSeleccionado(null); }}>Agregar al Carrito</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         <Footer />
       </div>

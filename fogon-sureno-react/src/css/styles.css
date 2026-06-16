@@ -16,6 +16,7 @@ body {
     color: var(--neutro-oscuro);
     font-family: var(--fuente-cuerpo);
     line-height: 1.6;
+    overflow-x: hidden; /* Evita que elementos que sobresalen creen barras laterales */
 }
 
 h1, h2, h3, h4 {
@@ -50,7 +51,20 @@ header {
 header nav ul {
     display: flex;
     list-style: none;
-    gap: var(--espacio-sm); 
+    gap: var(--espacio-sm);
+    align-items: center;
+    flex-wrap: wrap; /* Permite que los ítems bajen si no caben */
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column; /* Logo arriba, menú abajo en celulares */
+        gap: var(--espacio-sm);
+        text-align: center;
+    }
+    header nav ul {
+        justify-content: center;
+    }
 }
 
 /* ==========================================================================
@@ -208,6 +222,14 @@ header nav ul {
     display: flex;
     flex-direction: column;
     position: relative;
+}
+
+.plato img {
+    width: 100%;
+    height: 200px; /* Altura fija para uniformidad */
+    object-fit: cover; /* Recorta la imagen para llenar el espacio sin deformarse */
+    border-radius: calc(var(--borde-radio) / 2);
+    margin-bottom: var(--espacio-sm);
 }
 
 .plato-header {
@@ -404,6 +426,14 @@ footer p:last-child {
     align-items: center;
     padding: var(--espacio-sm) 0;
     border-bottom: 1px solid #eee;
+    gap: var(--espacio-sm);
+}
+
+@media (max-width: 600px) {
+    .cart-item-full {
+        flex-direction: column; /* Apila detalles del producto en móviles */
+        align-items: flex-start;
+    }
 }
 
 .cart-summary {
@@ -422,3 +452,67 @@ footer p:last-child {
 }
 
 .cart-empty { text-align: center; grid-column: 1 / -1; padding: var(--espacio-xl); }
+
+/* ==========================================================================
+   9. COMPONENTE: MODAL DE DETALLE
+   ========================================================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: var(--espacio-md);
+}
+
+.modal-content {
+    background-color: var(--neutro-claro);
+    width: 100%;
+    max-width: 700px;
+    border-radius: var(--borde-radio);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: rgba(255,255,255,0.8);
+    border: none;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--color-principal);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    z-index: 10;
+}
+
+.modal-info {
+    padding: var(--espacio-lg);
+}
+
+.modal-info h2 { margin-bottom: var(--espacio-sm); }
+.modal-info p { margin-bottom: var(--espacio-md); font-size: 1.1rem; }
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #eee;
+    padding-top: var(--espacio-md);
+}

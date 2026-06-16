@@ -13,10 +13,13 @@ export const Header = ({ cartCount }) => (
         <li><a href="/#inicio">Inicio</a></li>
         <li><a href="/#nosotros">Nosotros</a></li>
         <li><a href="/#menu">Nuestro Menú</a></li>
+        <li><a href="/#reserva">Reservas</a></li>
         <li><a href="/#contacto">Contacto</a></li>
-        <Link title="Ir al carrito" to="/carrito" className="cart-indicator">
-          🛒 <span>{cartCount}</span>
-        </Link>
+        <li>
+          <Link title="Ir al carrito" to="/carrito" className="cart-indicator">
+            🛒 <span>{cartCount}</span>
+          </Link>
+        </li>
       </ul>
     </nav>
   </header>
