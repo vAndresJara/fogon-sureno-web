@@ -39,22 +39,22 @@
             <h2>Especialidades de la Casa</h2>
             <p>Conoce algunos de nuestros platos más destacados:</p>
 
-            <div class="plato-container">
-                <article class="plato">
-                    <h3>Carnes al Palo</h3>
-                    <p>Cortes seleccionados asados lentamente con leña de espino, logrando una textura y sabor inigualables.</p>
-                </article>
+            <div class="busqueda-container">
+                <input type="text" id="busqueda-input" placeholder="Busca tu plato favorito...">
+            </div>
 
-                <article class="plato">
-                    <h3>Guisos Tradicionales</h3>
-                    <p>Preparaciones calientes llenas de sabor, ideales para compartir los días fríos con la mejor compañía.</p>
-                </article>
+            <div class="filtros-container">
+                <button class="btn-filtro activo" data-categoria="todos">Todos</button>
+                <button class="btn-filtro" data-categoria="carnes">Carnes</button>
+                <button class="btn-filtro" data-categoria="mariscos">Mariscos</button>
+                <button class="btn-filtro" data-categoria="postres">Postres</button>
+                <button class="btn-filtro" data-categoria="favoritos">❤️ Mis Favoritos</button>
+            </div>
 
-                <article class="plato">
-                    <h3>Postres Caseros</h3>
-                    <p>El toque dulce perfecto para terminar la jornada, hechos con recetas transmitidas de generación en generación.</p>
-                </article>
-            </div> </section>
+            <div class="plato-container" id="contenedor-menu">
+                <!-- Los platos se cargarán dinámicamente desde JS -->
+            </div>
+        </section>
 
         <section id="contacto">
             <h2>Encuéntranos / Reservas</h2>
@@ -77,6 +77,6 @@
         <p>&copy; 2026 Fogón Sureño. Todos los derechos reservados.</p>
         <p>Diseñado con pasión por la cocina tradicional.</p>
     </footer>
-
+    <script src="js/main.js"></script>
 </body>
 </html>

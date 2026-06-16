@@ -10,10 +10,10 @@ export const Header = ({ cartCount }) => (
     </div>
     <nav>
       <ul>
-        <li><Link to="/#inicio">Inicio</Link></li>
-        <li><Link to="/#nosotros">Nosotros</Link></li>
-        <li><Link to="/#menu">Nuestro Menú</Link></li>
-        <li><Link to="/#contacto">Contacto</Link></li>
+        <li><a href="/#inicio">Inicio</a></li>
+        <li><a href="/#nosotros">Nosotros</a></li>
+        <li><a href="/#menu">Nuestro Menú</a></li>
+        <li><a href="/#contacto">Contacto</a></li>
         <Link title="Ir al carrito" to="/carrito" className="cart-indicator">
           🛒 <span>{cartCount}</span>
         </Link>
