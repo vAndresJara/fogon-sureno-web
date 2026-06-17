@@ -453,6 +453,53 @@ footer p:last-child {
 
 .cart-empty { text-align: center; grid-column: 1 / -1; padding: var(--espacio-xl); }
 
+/* --- Botones y Acciones del Carrito --- */
+.item-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--espacio-xs);
+}
+
+.btn-eliminar {
+    background-color: transparent;
+    color: #b91c1c; /* Rojo tierra */
+    border: 1px solid #b91c1c;
+    padding: 0.3rem 0.7rem;
+    border-radius: var(--borde-radio);
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-eliminar:hover {
+    background-color: #b91c1c;
+    color: white;
+}
+
+.btn-pagar {
+    background-color: var(--color-acento);
+    color: var(--neutro-oscuro);
+    border: none;
+    padding: 1rem;
+    width: 100%;
+    border-radius: var(--borde-radio);
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-top: var(--espacio-sm);
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-pagar:hover {
+    background-color: #b45309;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
 /* ==========================================================================
    9. COMPONENTE: MODAL DE DETALLE
    ========================================================================== */

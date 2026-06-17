@@ -13,7 +13,7 @@ export const Header = ({ cartCount }) => (
         <li><a href="/#inicio">Inicio</a></li>
         <li><a href="/#nosotros">Nosotros</a></li>
         <li><a href="/#menu">Nuestro Menú</a></li>
-        <li><a href="/#reserva">Reservas</a></li>
+        <li><Link title="Reservar mesa" to="/reservas">Reservas</Link></li>
         <li><a href="/#contacto">Contacto</a></li>
         <li>
           <Link title="Ir al carrito" to="/carrito" className="cart-indicator">

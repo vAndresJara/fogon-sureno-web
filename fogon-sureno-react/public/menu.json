@@ -1,0 +1,107 @@
+[
+  {
+    "id": 1,
+    "nombre": "Curanto en Olla (Pulmay)",
+    "descripcion": "Tradicional preparación chilota con mariscos, carnes ahumadas, longaniza, papas, milcaos y chapaleles cooked al vapor.",
+    "precio": 14500,
+    "imagen": "assets/img/curanto.png",
+    "categoria": "carnes-mariscos"
+  },
+  {
+    "id": 2,
+    "nombre": "Asado de Tira al Palo",
+    "descripcion": "Corte de carne premium asado lentamente a la leña, tierno y jugoso, acompañado de papas doradas y pebre.",
+    "precio": 16900,
+    "imagen": "assets/img/asado.png",
+    "categoria": "carnes"
+  },
+  {
+    "id": 3,
+    "nombre": "Kuchen de Murta y Crema",
+    "descripcion": "Clásica receta de la repostería colona alemana con murtilla silvestre del sur y una suave crema horneada.",
+    "precio": 4500,
+    "imagen": "assets/img/kuchen.png",
+    "categoria": "postres"
+  },
+  {
+    "id": 4,
+    "nombre": "Salmón Cancato Sureño",
+    "descripcion": "Filete de salmón fresco al horno, relleno con queso mantecoso, tomate y longaniza laminada, sazonado con orégano.",
+    "precio": 13200,
+    "imagen": "assets/img/salmon.png",
+    "categoria": "mariscos"
+  },
+  {
+    "id": 5,
+    "nombre": "Cordero al Palo",
+    "descripcion": "Crujiente y jugoso cordero magallánico asado lentamente al calor de las brasas, servido con papas rústicas y pebre.",
+    "precio": 18500,
+    "imagen": "assets/img/cordero.png",
+    "categoria": "carnes"
+  },
+  {
+    "id": 7,
+    "nombre": "Paila Marina",
+    "descripcion": "Concentrado caldo de mariscos y pescados de la zona, servido en paila de greda para mantener todo su calor y sabor.",
+    "precio": 13900,
+    "imagen": "assets/img/paila-marina.png",
+    "categoria": "mariscos"
+  },
+  {
+    "id": 8,
+    "nombre": "Empanada de Mariscos",
+    "descripcion": "Crujiente masa rellena con una mezcla de mariscos frescos, cebolla, pimiento y especias, horneada a la perfección.",
+    "precio": 3500,
+    "imagen": "assets/img/empanada.png",
+    "categoria": "mariscos"
+  },
+  {
+    "id": 9,
+    "nombre": "Mote con Huesillo",
+    "descripcion": "Refrescante bebida tradicional chilena hecha con mote cocido y huesillos (duraznos secos) en un dulce almíbar.",
+    "precio": 2500,
+    "imagen": "assets/img/mote-huesillo.png",
+    "categoria": "bebidas"
+  },
+  {
+    "id": 10,
+    "nombre": "Chorillana Sureña",
+    "descripcion": "Clásico plato de papas fritas cubiertas con carne, cebolla caramelizada, huevo frito y longaniza, una explosión de sabores sureños.",
+    "precio": 12500,
+    "imagen": "assets/img/chorillana.png",
+    "categoria": "carnes"
+  },
+  {
+    "id": 11,
+    "nombre": "Caldillo de Congrio",
+    "descripcion": "Sabor tradicional chileno con un caldo rico y aromático, lleno de trozos de congrio fresco, papas, cebolla y especias.",
+    "precio": 12800,
+    "imagen": "assets/img/caldillo-congrio.png",
+    "categoria": "mariscos"
+  },
+  {
+    "id": 12,
+    "nombre": "Torta de Milcao con Chicharrones",
+    "descripcion": "Deliciosa torta hecha con milcao rallado y chicharrones crujientes, una combinación perfecta de texturas y sabores sureños.",
+    "precio": 4800,
+    "imagen": "assets/img/torta-milcao.png",
+    "categoria": "postres"
+  },
+  {
+    "id": 13,
+    "nombre": "Cerveza Artesanal Sureña",
+    "descripcion": "Refrescante cerveza artesanal elaborada con ingredientes locales, perfecta para acompañar nuestros platos tradicionales.",
+    "precio": 4000,
+    "imagen": "assets/img/cerveza.png",
+    "categoria": "bebidas"
+  },
+  {
+    "id": 14,
+    "nombre": "Sopaipillas con Pebre",
+    "descripcion": "Crujientes sopaipillas recién hechas, servidas con nuestro pebre casero, una combinación clásica del sur de Chile para disfrutar como aperitivo o acompañamiento.",
+    "precio": 3000,
+    "imagen": "assets/img/sopaipillas.png",
+    "categoria": "tablas"
+  }
+
+]

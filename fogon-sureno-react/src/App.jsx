@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { menuPlatos } from './menu'; // Ajusta la ruta según tu carpeta
 import { PlatoCard } from './PlatoCard';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { CartPage } from './CartPage';
+import { ReservaPage } from './ReservaPage';
 import './css/variables.css';
 import './css/styles.css';
 
@@ -12,6 +12,7 @@ function App() {
   // Estados
   const [busqueda, setBusqueda] = useState('');
   const [categoria, setCategoria] = useState('todos');
+  const [platos, setPlatos] = useState([]);
   const [platoSeleccionado, setPlatoSeleccionado] = useState(null);
   const [favoritos, setFavoritos] = useState(() => {
     const save = localStorage.getItem('favoritos-fogon');
@@ -21,6 +22,21 @@ function App() {
     const save = localStorage.getItem('cart-fogon');
     return save ? JSON.parse(save) : [];
   });
+
+  // Carga asíncrona del menú
+  useEffect(() => {
+    const cargarMenu = async () => {
+      try {
+        const response = await fetch('/menu.json');
+        const data = await response.json();
+        setPlatos(data);
+      } catch (error) {
+        console.error("Error al obtener el menú:", error);
+      }
+    };
+
+    cargarMenu();
+  }, []);
 
   // Persistencia de favoritos
   useEffect(() => {
@@ -34,7 +50,7 @@ function App() {
 
   // Lógica de filtrado (optimizada con useMemo)
   const platosFiltrados = useMemo(() => {
-    return menuPlatos.filter(plato => {
+    return platos.filter(plato => {
       const coincideTexto = plato.nombre.toLowerCase().includes(busqueda.toLowerCase()) || 
                             plato.descripcion.toLowerCase().includes(busqueda.toLowerCase());
       
@@ -45,7 +61,7 @@ function App() {
 
       return coincideTexto && coincideCategoria;
     });
-  }, [busqueda, categoria, favoritos]);
+  }, [platos, busqueda, categoria, favoritos]);
 
   const toggleFavorito = (id) => {
     setFavoritos(prev => prev.includes(id) ? prev.filter(f => f !== id) : [...prev, id]);
@@ -89,7 +105,8 @@ function App() {
               <section id="inicio">
                 <h2>Bienvenidos al Auténtico Sabor del Sur</h2>
                 <p>Disfruta de la mejor gastronomía tradicional, preparada con pasión y al calor del fogón.</p>
-                <a href="#menu">Ver la Carta</a>
+                <div className="hero-buttons">
+                </div>
               </section>
 
               <section id="nosotros">
@@ -165,6 +182,8 @@ function App() {
               updateQuantity={updateQuantity} 
             />
           } />
+
+          <Route path="/reservas" element={<ReservaPage />} />
         </Routes>
 
         {/* Ventana Modal de Detalle */}
