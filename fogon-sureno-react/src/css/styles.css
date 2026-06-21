@@ -209,6 +209,10 @@ header nav ul {
     gap: var(--espacio-md); /* Espacio controlado entre tarjetas */
     max-width: 1100px;
     margin: 0 auto;
+    /* --- Mejoras para el scroll --- */
+    max-height: 75vh; /* Altura máxima antes de que aparezca el scroll */
+    overflow-y: auto; /* Activa el scroll vertical solo si es necesario */
+    padding-right: var(--espacio-xs); /* Espacio para que el scroll no se pegue al contenido */
 }
 
 /* Tarjeta individual de cada plato */
@@ -284,6 +288,20 @@ header nav ul {
     background: var(--color-secundario);
     padding: 2px 10px;
     border-radius: 20px;
+}
+
+.btn-sesion {
+    font: inherit;
+    color: inherit;
+    background: transparent;
+    border: 1px solid currentColor;
+    padding: 4px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.btn-sesion:hover {
+    background: var(--color-secundario);
 }
 
 .plato h3 {
@@ -562,4 +580,71 @@ footer p:last-child {
     align-items: center;
     border-top: 1px solid #eee;
     padding-top: var(--espacio-md);
+}
+
+/* --- Estilos de Reserva --- */
+.reserva-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio-sm);
+    max-width: 450px;
+    margin: 2rem auto;
+    text-align: left;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group input, .form-group select {
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: var(--borde-radio);
+    font-family: inherit;
+    background-color: white;
+}
+
+.mensaje-status {
+    background-color: #d1fae5;
+    color: #065f46;
+    padding: var(--espacio-sm);
+    border-radius: var(--borde-radio);
+    margin-bottom: var(--espacio-md);
+    font-weight: 600;
+}
+/* --- Estilos para el Panel de Administración --- */
+.admin-menu-container {
+    padding: var(--espacio-xl) var(--espacio-md);
+    max-width: 600px;
+    margin: 0 auto;
+}
+#admin-menu-form {
+    background-color: var(--neutro-claro);
+    padding: var(--espacio-md);
+    border-radius: var(--borde-radio);
+    box-shadow: var(--sombra-suave);
+}
+
+
+/* ==========================================================================
+   10. ESTILOS ADICIONALES (Scroll Personalizado)
+   ========================================================================== */
+#menu .plato-container::-webkit-scrollbar {
+    width: 12px; /* Ancho de la barra */
+}
+
+#menu .plato-container::-webkit-scrollbar-track {
+    background: transparent; /* Fondo de la pista del scroll */
+}
+
+#menu .plato-container::-webkit-scrollbar-thumb {
+    background-color: var(--color-secundario); /* Color greda para la barra */
+    border-radius: 20px; /* Bordes redondeados */
+    border: 3px solid #f3efe9; /* Borde del mismo color que el fondo de la sección */
+}
+
+#menu .plato-container::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-principal); /* Cambia a verde al pasar el mouse */
 }

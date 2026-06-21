@@ -1,5 +1,7 @@
+// CartModal.jsx
 import React from 'react';
 
+// Componente modal para mostrar el contenido del carrito de compras, permite actualizar cantidades y eliminar platos
 export const CartModal = ({ isOpen, onClose, cart, removeFromCart, updateQuantity }) => {
   if (!isOpen) return null;
 
@@ -34,6 +36,7 @@ export const CartModal = ({ isOpen, onClose, cart, removeFromCart, updateQuantit
           )}
         </div>
 
+        // Muestra el total y el botón de finalizar pedido solo si hay items en el carrito
         {cart.length > 0 && (
           <div className="modal-footer">
             <h3>Total: ${total.toLocaleString('es-CL')}</h3>

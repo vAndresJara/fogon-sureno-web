@@ -24,9 +24,9 @@ function App() {
   // Lógica de filtrado (optimizada con useMemo)
   const platosFiltrados = useMemo(() => {
     return menuPlatos.filter(plato => {
-      const coincideTexto = plato.nombre.toLowerCase().includes(busqueda.toLowerCase()) || 
-                            plato.descripcion.toLowerCase().includes(busqueda.toLowerCase());
-      
+      const coincideTexto = plato.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
+        plato.descripcion.toLowerCase().includes(busqueda.toLowerCase());
+
       let coincideCategoria = false;
       if (categoria === "todos") coincideCategoria = true;
       else if (categoria === "favoritos") coincideCategoria = favoritos.includes(plato.id);
@@ -70,51 +70,51 @@ function App() {
           <h2>Nuestra Historia</h2>
           <p>Nacidos con el propósito de traer las recetas más rústicas, sabrosas y tradicionales directamente a tu mesa. Cada plato cuenta una historia de tradición familiar.</p>
         </section>
-      
-      <section id="menu">
-        <h2>Especialidades de la Casa</h2>
-        <p>Conoce algunos de nuestros platos más destacados:</p>
 
-        <div className="busqueda-container">
-          <input 
-            type="text" 
-            placeholder="Busca tu plato favorito..." 
-            value={busqueda}
-            onChange={(e) => setBusqueda(e.target.value)}
-          />
-        </div>
+        <section id="menu">
+          <h2>Especialidades de la Casa</h2>
+          <p>Conoce algunos de nuestros platos más destacados:</p>
 
-        <div className="filtros-container">
-          {['todos', 'carnes', 'mariscos', 'postres', 'favoritos'].map(cat => (
-            <button 
-              key={cat}
-              className={`btn-filtro ${categoria === cat ? 'activo' : ''}`}
-              onClick={() => setCategoria(cat)}
-            >
-              {cat === 'favoritos' ? '❤️ Mis Favoritos' : cat.charAt(0).toUpperCase() + cat.slice(1)}
-            </button>
-          ))}
-        </div>
-
-        <div className="plato-container">
-          {platosFiltrados.map(plato => (
-            <PlatoCard 
-              key={plato.id} 
-              plato={plato} 
-              esFavorito={favoritos.includes(plato.id)} 
-              toggleFavorito={toggleFavorito}
-              addToCart={addToCart}
+          <div className="busqueda-container">
+            <input
+              type="text"
+              placeholder="Busca tu plato favorito..."
+              value={busqueda}
+              onChange={(e) => setBusqueda(e.target.value)}
             />
-          ))}
-        </div>
-      </section>
+          </div>
+
+          <div className="filtros-container">
+            {['todos', 'Carnes', 'Pescados y Mariscos', 'Postres', 'Bebidas', 'Ensaladas', 'Sopas', 'Aperitivos', 'Tablas', 'favoritos'].map(cat => (
+              <button
+                key={cat}
+                className={`btn-filtro ${categoria === cat ? 'activo' : ''}`}
+                onClick={() => setCategoria(cat)}
+              >
+                {cat === 'favoritos' ? '❤️ Mis Favoritos' : cat.charAt(0).toUpperCase() + cat.slice(1)}
+              </button>
+            ))}
+          </div>
+
+          <div className="plato-container">
+            {platosFiltrados.map(plato => (
+              <PlatoCard
+                key={plato.id}
+                plato={plato}
+                esFavorito={favoritos.includes(plato.id)}
+                toggleFavorito={toggleFavorito}
+                addToCart={addToCart}
+              />
+            ))}
+          </div>
+        </section>
 
         <section id="contacto">
           <h2>Encuéntranos / Reservas</h2>
           <div className="contacto-flex">
             <article className="info-contacto">
               <h3>Horarios de Atención</h3>
-              <p>Lunes a Sábado: 12:30 a 23:00 hrs.<br/>Domingos: 12:30 a 17:00 hrs.</p>
+              <p>Lunes a Sábado: 12:30 a 23:00 hrs.<br />Domingos: 12:30 a 17:00 hrs.</p>
             </article>
 
             <article className="info-contacto">
