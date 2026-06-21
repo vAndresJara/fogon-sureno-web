@@ -1,3 +1,15 @@
+# Archivos de sistema operativo
 .DS_Store
 Thumbs.db
+
+# Archivos de configuración de editores
 .vscode/
+
+# Archivos de dependencias y builds
+node_modules/
+dist/
+build/
+
+# Archivos de entorno (¡MUY IMPORTANTE!)
+.env
+.env.*.local
