@@ -28,7 +28,7 @@ export const MenuAdmin = () => {
     const [formData, setFormData] = useState({
         nombre: '',
         descripcion: '',
-        precio: 0,
+        precio: '',
         imagen: '',
         categoria: '',
         disponible: true
@@ -126,7 +126,7 @@ export const MenuAdmin = () => {
                     'x-auth-token': token
                 }
             };
-            const res = await axios.post('http://localhost:5000/api/upload', uploadData, config);
+            const res = await axios.post('http://localhost:5000/api/menu/upload', uploadData, config);
             const returnedUrl = res.data.imageUrl;
 
             if (isEditing) {
@@ -154,12 +154,16 @@ export const MenuAdmin = () => {
         setMensaje({ texto: '', tipo: '' });
         try {
             const config = { headers: { 'Content-Type': 'application/json', 'x-auth-token': token } };
-            await axios.post(API_URL, formData, config);
+            const finalData = {
+                ...formData,
+                precio: parseFloat(formData.precio) || 0
+            };
+            await axios.post(API_URL, finalData, config);
             setMensaje({ texto: 'Plato agregado al menú correctamente.', tipo: 'success' });
             setFormData({
                 nombre: '',
                 descripcion: '',
-                precio: 0,
+                precio: '',
                 imagen: '',
                 categoria: '',
                 disponible: true
@@ -204,7 +208,11 @@ export const MenuAdmin = () => {
         setMensaje({ texto: '', tipo: '' });
         try {
             const config = { headers: { 'Content-Type': 'application/json', 'x-auth-token': token } };
-            const res = await axios.put(`${API_URL}/${editingPlato._id}`, editingPlato, config);
+            const finalData = {
+                ...editingPlato,
+                precio: parseFloat(editingPlato.precio) || 0
+            };
+            const res = await axios.put(`${API_URL}/${editingPlato._id}`, finalData, config);
             
             setMensaje({ texto: 'Plato actualizado correctamente.', tipo: 'success' });
             setPlatos(prev => prev.map(p => p._id === editingPlato._id ? res.data.plato : p));
@@ -328,7 +336,7 @@ export const MenuAdmin = () => {
                                         required 
                                         min="0"
                                         value={formData.precio} 
-                                        onChange={e => setFormData({ ...formData, precio: parseFloat(e.target.value) || 0 })} 
+                                        onChange={e => setFormData({ ...formData, precio: e.target.value === '' ? '' : (parseFloat(e.target.value) || 0) })} 
                                     />
                                 </div>
                                 <div className="col-md-6">
@@ -711,7 +719,7 @@ export const MenuAdmin = () => {
                                                     required 
                                                     min="0"
                                                     value={editingPlato.precio} 
-                                                    onChange={e => setEditingPlato({ ...editingPlato, precio: parseFloat(e.target.value) || 0 })} 
+                                                    onChange={e => setEditingPlato({ ...editingPlato, precio: e.target.value === '' ? '' : (parseFloat(e.target.value) || 0) })} 
                                                 />
                                             </div>
                                             <div className="col-md-6">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -32,7 +32,7 @@ const AdminReservasPage = () => {
         setError('');
         try {
             // Configuramos axios con token y señal de cancelación
-            const config = { 
+            const config = {
                 headers: { 'x-auth-token': token },
                 signal: signal
             };
@@ -53,7 +53,7 @@ const AdminReservasPage = () => {
     useEffect(() => {
         const controller = new AbortController();
         fetchReservas(controller.signal);
-        
+
         return () => {
             controller.abort();
         };
@@ -72,7 +72,7 @@ const AdminReservasPage = () => {
             const config = { headers: { 'x-auth-token': token } };
             // Enviamos la petición DELETE con el ID de la reserva
             await axios.delete(`http://localhost:5000/api/reservas/${id}`, config);
-            
+
             // Si el backend responde bien, la quitamos del estado local
             setReservas(prev => prev.filter(reserva => reserva._id !== id));
         } catch (err) {
@@ -86,10 +86,10 @@ const AdminReservasPage = () => {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
                 <h2>Panel de Administración de Reservas</h2>
                 <div style={{ display: 'flex', gap: '0.75rem' }}>
-                    <button 
-                        onClick={() => fetchReservas()} 
-                        className="btn-agregar" 
-                        style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }} 
+                    <button
+                        onClick={() => fetchReservas()}
+                        className="btn-agregar"
+                        style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
                         disabled={loading}
                     >
                         🔄 Actualizar
@@ -153,8 +153,8 @@ const AdminReservasPage = () => {
                                     <tr key={reserva._id} style={{ borderBottom: '1px solid #eee', transition: 'background-color 0.2s' }} className="reserva-row">
                                         <td style={{ padding: '12px 8px', fontWeight: '500' }}>{reserva.nombre}</td>
                                         <td style={{ padding: '12px 8px', color: 'var(--neutro-gris)' }}>{reserva.email}</td>
-                                        <td style={{ padding: '12px 8px', color: 'var(--neutro-gris)' }}>{reserva.telefono || <span style={{ fontStyle: 'italic', opacity: 0.7 }}>N/A</span>}</td>
-                                        <td style={{ padding: '12px 8px' }}>
+                                        <td style={{ padding: '12px 8px', color: 'var(--neutro-gris)', whiteSpace: 'nowrap' }}>{reserva.telefono || <span style={{ fontStyle: 'italic', opacity: 0.7 }}>N/A</span>}</td>
+                                        <td style={{ padding: '12px 8px', whiteSpace: 'nowrap' }}>
                                             <span style={{
                                                 backgroundColor: 'rgba(44, 74, 62, 0.1)',
                                                 color: 'var(--color-principal)',
@@ -166,7 +166,7 @@ const AdminReservasPage = () => {
                                                 {formatFecha(reserva.fecha)}
                                             </span>
                                         </td>
-                                        <td style={{ padding: '12px 8px' }}>
+                                        <td style={{ padding: '12px 8px', whiteSpace: 'nowrap' }}>
                                             <span style={{
                                                 backgroundColor: 'rgba(13, 110, 253, 0.1)',
                                                 color: '#0d6efd',
@@ -178,7 +178,7 @@ const AdminReservasPage = () => {
                                                 {reserva.zonaId?.nombre || 'N/A'}
                                             </span>
                                         </td>
-                                        <td style={{ padding: '12px 8px', textAlign: 'center' }}>
+                                        <td style={{ padding: '12px 8px', textAlign: 'center', whiteSpace: 'nowrap' }}>
                                             <span style={{
                                                 backgroundColor: 'rgba(217, 119, 6, 0.1)',
                                                 color: 'var(--color-acento)',

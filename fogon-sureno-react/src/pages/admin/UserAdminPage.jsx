@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -95,7 +95,7 @@ export const UserAdminPage = () => {
                 telefono: formattedPhone,
                 role: editingUsuario.role
             }, config);
-            
+
             setUsuarios(prev => prev.map(u => u._id === editingUsuario._id ? res.data.user : u));
             setMensajeExito('Usuario actualizado correctamente.');
             setEditingUsuario(null);
@@ -120,7 +120,7 @@ export const UserAdminPage = () => {
         try {
             const config = { headers: { 'x-auth-token': token } };
             await axios.delete(`http://localhost:5000/api/users/${id}`, config);
-            
+
             // Actualizar estado local
             setUsuarios(prev => prev.filter(u => u._id !== id));
             setMensajeExito('Usuario eliminado correctamente.');
@@ -136,10 +136,10 @@ export const UserAdminPage = () => {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
                 <h2>Panel de Administración de Usuarios</h2>
                 <div style={{ display: 'flex', gap: '0.75rem' }}>
-                    <button 
-                        onClick={() => fetchUsuarios()} 
-                        className="btn-agregar" 
-                        style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }} 
+                    <button
+                        onClick={() => fetchUsuarios()}
+                        className="btn-agregar"
+                        style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
                         disabled={loading}
                     >
                         🔄 Actualizar
@@ -222,7 +222,7 @@ export const UserAdminPage = () => {
                                             <td style={{ padding: '12px 8px', color: 'var(--neutro-gris)' }}>
                                                 {usuario.email} {esPropioUsuario && <span style={{ color: 'var(--color-principal)', fontSize: '0.8rem', fontWeight: 'bold' }}>(Tú)</span>}
                                             </td>
-                                            <td style={{ padding: '12px 8px', textAlign: 'center' }}>
+                                            <td style={{ padding: '12px 8px', textAlign: 'center', whiteSpace: 'nowrap' }}>
                                                 {usuario.telefono || <span style={{ color: 'var(--neutro-gris)', fontStyle: 'italic' }}>Sin teléfono</span>}
                                             </td>
                                             <td style={{ padding: '12px 8px', textAlign: 'center' }}>
@@ -243,12 +243,12 @@ export const UserAdminPage = () => {
                                             </td>
                                             <td style={{ padding: '12px 8px', textAlign: 'center' }}>
                                                 <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
-                                                    <button 
-                                                        onClick={() => setEditingUsuario({ ...usuario })} 
-                                                        className="btn-qty" 
-                                                        style={{ 
-                                                            width: 'auto', 
-                                                            height: 'auto', 
+                                                    <button
+                                                        onClick={() => setEditingUsuario({ ...usuario })}
+                                                        className="btn-qty"
+                                                        style={{
+                                                            width: 'auto',
+                                                            height: 'auto',
                                                             padding: '0.3rem 0.6rem',
                                                             fontSize: '0.8rem',
                                                             backgroundColor: 'var(--color-principal)',
@@ -260,8 +260,8 @@ export const UserAdminPage = () => {
                                                     >
                                                         Editar
                                                     </button>
-                                                    <button 
-                                                        onClick={() => handleEliminarUsuario(usuario._id)} 
+                                                    <button
+                                                        onClick={() => handleEliminarUsuario(usuario._id)}
                                                         className="btn-eliminar"
                                                         style={{
                                                             opacity: esPropioUsuario ? 0.5 : 1,
@@ -301,22 +301,22 @@ export const UserAdminPage = () => {
                                 <div className="modal-body" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
                                     <div className="form-group" style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                                         <label className="fw-bold text-secondary" style={{ fontSize: '0.9rem' }}>Nombre Completo</label>
-                                        <input 
-                                            type="text" 
-                                            className="form-control" 
-                                            required 
-                                            value={editingUsuario.nombre || ''} 
-                                            onChange={e => setEditingUsuario({ ...editingUsuario, nombre: e.target.value })} 
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            required
+                                            value={editingUsuario.nombre || ''}
+                                            onChange={e => setEditingUsuario({ ...editingUsuario, nombre: e.target.value })}
                                             style={{ padding: '0.8rem', border: '1px solid #ddd', borderRadius: 'var(--borde-radio)', fontSize: '1rem' }}
                                         />
                                     </div>
                                     <div className="form-group" style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                                         <label className="fw-bold text-secondary" style={{ fontSize: '0.9rem' }}>Teléfono de Contacto</label>
-                                        <input 
-                                            type="text" 
-                                            className="form-control" 
-                                            required 
-                                            value={editingUsuario.telefono || ''} 
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            required
+                                            value={editingUsuario.telefono || ''}
                                             onChange={e => {
                                                 const val = e.target.value;
                                                 const cleaned = val.replace(/\D/g, '');

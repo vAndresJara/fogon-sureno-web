@@ -40,12 +40,19 @@ img {
    3. COMPONENTE: HEADER & NAVEGACIÓN (Barra Verde)
    ========================================================================== */
 header {
-    background-color: var(--color-principal);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: rgba(44, 74, 62, 0.95); /* Verde Bosque Nativo translúcido */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     color: var(--neutro-claro);
     display: flex;
     justify-content: space-between; 
     align-items: center;            
     padding: var(--espacio-sm) var(--espacio-md);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
 }
 
 header nav ul {
@@ -54,6 +61,27 @@ header nav ul {
     gap: var(--espacio-sm);
     align-items: center;
     flex-wrap: wrap; /* Permite que los ítems bajen si no caben */
+}
+
+header h1 {
+    color: var(--neutro-claro);
+    transition: opacity 0.3s ease;
+}
+
+header h1:hover {
+    opacity: 0.9;
+}
+
+header nav ul li a {
+    color: rgba(252, 250, 247, 0.85);
+    font-weight: 500;
+    transition: color 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+}
+
+header nav ul li a:hover {
+    color: var(--neutro-claro);
+    transform: translateY(-1px);
 }
 
 @media (max-width: 768px) {
