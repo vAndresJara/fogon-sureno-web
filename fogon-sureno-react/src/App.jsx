@@ -1,25 +1,26 @@
-import React, { useState, useMemo } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { PlatoCard } from './PlatoCard';
-import { Header } from './Header';
-import { Footer } from './Footer';
-import { CartPage } from './CartPage';
-import { ReservaPage } from './ReservaPage';
-import { CartProvider, useCart } from './CartContext';
-import { AuthProvider } from './AuthContext';
-import { useMenu } from './hooks/useMenu';
-import './css/variables.css';
-import './css/styles.css';
-import LoginPage from './LoginPage';
-import RegisterPage from './RegisterPage';
-import ForgotPasswordPage from './ForgotPasswordPage';
-import ResetPasswordPage from './ResetPasswordPage';
-import AdminReservasPage from './AdminReservasPage';
-import ProtectedRoute from './ProtectedRoute';
-import { MenuAdmin } from './MenuAdmin';
-import { UserAdminPage } from './UserAdminPage';
-import { ZonaAdminPage } from './ZonaAdminPage';
-import { ProfilePage } from './ProfilePage';
+
+import React, { useState, useMemo } from 'react';//importaciones de hook de react
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';//importaciones de react router dom
+import { PlatoCard } from './components/ui/PlatoCard';//importaciones de componente plato card
+import { Header } from './components/common/Header';//importaciones de componente header
+import { Footer } from './components/common/Footer';//importaciones de componente footer
+import { CartPage } from './pages/CartPage';//importaciones de componente cart page
+import { ReservaPage } from './pages/ReservaPage';//importaciones de componente reserva page
+import { CartProvider, useCart } from './context/CartContext';//importaciones de contexto cart
+import { AuthProvider } from './context/AuthContext';//importaciones de contexto auth
+import { useMenu } from './hooks/useMenu';//importaciones de hook use menu
+import './styles/variables.css';//importaciones de variables
+import './styles/styles.css';//importaciones de styles
+import LoginPage from './pages/auth/LoginPage';//importaciones de componente login
+import RegisterPage from './pages/auth/RegisterPage';//importaciones de componente register
+import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';//importaciones de componente forgot password
+import ResetPasswordPage from './pages/auth/ResetPasswordPage';//importaciones de componente reset password
+import AdminReservasPage from './pages/admin/AdminReservasPage';//importaciones de componente admin reservas
+import ProtectedRoute from './components/common/ProtectedRoute';//importaciones de componente protected route
+import { MenuAdmin } from './pages/admin/MenuAdmin';//importaciones de componente admin menu
+import { UserAdminPage } from './pages/admin/UserAdminPage';//importaciones de componente user admin
+import { ZonaAdminPage } from './pages/admin/ZonaAdminPage';//importaciones de componente zona admin
+import { ProfilePage } from './pages/ProfilePage';//importaciones de componente profile page
 
 function AppContent() {
   // Estados
