@@ -2,8 +2,9 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../../config';
 
-const API_URL = 'http://localhost:5000/api/zonas';
+const API_URL = `${API_BASE_URL}/zonas`;
 
 export const ZonaAdminPage = () => {
     const { token, isAdmin, logout } = useAuth();
@@ -75,7 +76,7 @@ export const ZonaAdminPage = () => {
         try {
             const config = { headers: { 'Content-Type': 'application/json', 'x-auth-token': token } };
             const res = await axios.post(API_URL, formData, config);
-            setZonas(prev => [...prev, res.data.zona].sort((a,b) => a.capacidadMesa - b.capacidadMesa));
+            setZonas(prev => [...prev, res.data.zona].sort((a, b) => a.capacidadMesa - b.capacidadMesa));
             setMensaje({ texto: 'Zona creada exitosamente.', tipo: 'success' });
             setFormData({
                 nombre: '',
@@ -101,8 +102,8 @@ export const ZonaAdminPage = () => {
         try {
             const config = { headers: { 'Content-Type': 'application/json', 'x-auth-token': token } };
             const res = await axios.put(`${API_URL}/${editingZona._id}`, editingZona, config);
-            
-            setZonas(prev => prev.map(z => z._id === editingZona._id ? res.data.zona : z).sort((a,b) => a.capacidadMesa - b.capacidadMesa));
+
+            setZonas(prev => prev.map(z => z._id === editingZona._id ? res.data.zona : z).sort((a, b) => a.capacidadMesa - b.capacidadMesa));
             setMensaje({ texto: 'Zona actualizada correctamente.', tipo: 'success' });
             setEditingZona(null);
             setTimeout(() => setMensaje({ texto: '', tipo: '' }), 4000);
@@ -175,35 +176,35 @@ export const ZonaAdminPage = () => {
                             <form onSubmit={handleAddSubmit}>
                                 <div className="mb-3">
                                     <label className="form-label fw-semibold text-secondary">Nombre de la Zona</label>
-                                    <input 
-                                        type="text" 
-                                        className="form-control border-secondary-subtle" 
-                                        required 
+                                    <input
+                                        type="text"
+                                        className="form-control border-secondary-subtle"
+                                        required
                                         placeholder="Ej: Terraza, VIP, Salón"
-                                        value={formData.nombre} 
-                                        onChange={e => setFormData({ ...formData, nombre: e.target.value })} 
+                                        value={formData.nombre}
+                                        onChange={e => setFormData({ ...formData, nombre: e.target.value })}
                                     />
                                 </div>
                                 <div className="mb-3">
                                     <label className="form-label fw-semibold text-secondary">Mesas Disponibles (Stock)</label>
-                                    <input 
-                                        type="number" 
-                                        className="form-control border-secondary-subtle" 
-                                        required 
+                                    <input
+                                        type="number"
+                                        className="form-control border-secondary-subtle"
+                                        required
                                         min="1"
-                                        value={formData.mesasDisponibles} 
-                                        onChange={e => setFormData({ ...formData, mesasDisponibles: parseInt(e.target.value) || 1 })} 
+                                        value={formData.mesasDisponibles}
+                                        onChange={e => setFormData({ ...formData, mesasDisponibles: parseInt(e.target.value) || 1 })}
                                     />
                                 </div>
                                 <div className="mb-3">
                                     <label className="form-label fw-semibold text-secondary">Capacidad de Personas por Mesa</label>
-                                    <input 
-                                        type="number" 
-                                        className="form-control border-secondary-subtle" 
-                                        required 
+                                    <input
+                                        type="number"
+                                        className="form-control border-secondary-subtle"
+                                        required
                                         min="1"
-                                        value={formData.capacidadMesa} 
-                                        onChange={e => setFormData({ ...formData, capacidadMesa: parseInt(e.target.value) || 2 })} 
+                                        value={formData.capacidadMesa}
+                                        onChange={e => setFormData({ ...formData, capacidadMesa: parseInt(e.target.value) || 2 })}
                                     />
                                 </div>
                                 <button type="submit" className="btn btn-success w-100 mt-2" disabled={enviando}>
@@ -258,20 +259,20 @@ export const ZonaAdminPage = () => {
                                                     </td>
                                                     <td className="text-center">
                                                         <div className="d-flex gap-2 justify-content-center">
-                                                            <button 
-                                                                onClick={() => setEditingZona({ ...zona })} 
+                                                            <button
+                                                                onClick={() => setEditingZona({ ...zona })}
                                                                 className="btn btn-sm btn-primary fw-bold"
                                                             >
                                                                 Editar
                                                             </button>
-                                                            <button 
-                                                                onClick={() => handleToggleDisponible(zona)} 
+                                                            <button
+                                                                onClick={() => handleToggleDisponible(zona)}
                                                                 className={`btn btn-sm fw-bold ${zona.disponible === false ? 'btn-success' : 'btn-warning'}`}
                                                             >
                                                                 {zona.disponible === false ? 'Mostrar' : 'Ocultar'}
                                                             </button>
-                                                            <button 
-                                                                onClick={() => handleEliminarZona(zona._id)} 
+                                                            <button
+                                                                onClick={() => handleEliminarZona(zona._id)}
                                                                 className="btn btn-sm btn-danger fw-bold"
                                                             >
                                                                 Eliminar
@@ -302,43 +303,43 @@ export const ZonaAdminPage = () => {
                                 <div className="modal-body">
                                     <div className="mb-3">
                                         <label className="form-label fw-bold text-secondary">Nombre de la Zona</label>
-                                        <input 
-                                            type="text" 
-                                            className="form-control border-secondary-subtle" 
-                                            required 
-                                            value={editingZona.nombre} 
-                                            onChange={e => setEditingZona({ ...editingZona, nombre: e.target.value })} 
+                                        <input
+                                            type="text"
+                                            className="form-control border-secondary-subtle"
+                                            required
+                                            value={editingZona.nombre}
+                                            onChange={e => setEditingZona({ ...editingZona, nombre: e.target.value })}
                                         />
                                     </div>
                                     <div className="mb-3">
                                         <label className="form-label fw-bold text-secondary">Mesas Disponibles (Stock)</label>
-                                        <input 
-                                            type="number" 
-                                            className="form-control border-secondary-subtle" 
-                                            required 
+                                        <input
+                                            type="number"
+                                            className="form-control border-secondary-subtle"
+                                            required
                                             min="1"
-                                            value={editingZona.mesasDisponibles} 
-                                            onChange={e => setEditingZona({ ...editingZona, mesasDisponibles: parseInt(e.target.value) || 1 })} 
+                                            value={editingZona.mesasDisponibles}
+                                            onChange={e => setEditingZona({ ...editingZona, mesasDisponibles: parseInt(e.target.value) || 1 })}
                                         />
                                     </div>
                                     <div className="mb-3">
                                         <label className="form-label fw-bold text-secondary">Capacidad de Personas por Mesa</label>
-                                        <input 
-                                            type="number" 
-                                            className="form-control border-secondary-subtle" 
-                                            required 
+                                        <input
+                                            type="number"
+                                            className="form-control border-secondary-subtle"
+                                            required
                                             min="1"
-                                            value={editingZona.capacidadMesa} 
-                                            onChange={e => setEditingZona({ ...editingZona, capacidadMesa: parseInt(e.target.value) || 2 })} 
+                                            value={editingZona.capacidadMesa}
+                                            onChange={e => setEditingZona({ ...editingZona, capacidadMesa: parseInt(e.target.value) || 2 })}
                                         />
                                     </div>
                                     <div className="mb-3 form-check form-switch">
-                                        <input 
-                                            type="checkbox" 
-                                            className="form-check-input" 
-                                            id="zona-disponible" 
+                                        <input
+                                            type="checkbox"
+                                            className="form-check-input"
+                                            id="zona-disponible"
                                             checked={editingZona.disponible !== false}
-                                            onChange={e => setEditingZona({ ...editingZona, disponible: e.target.checked })} 
+                                            onChange={e => setEditingZona({ ...editingZona, disponible: e.target.checked })}
                                         />
                                         <label className="form-check-label fw-bold text-secondary" htmlFor="zona-disponible">
                                             Activa para Reservas (Pública)

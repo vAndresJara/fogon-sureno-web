@@ -2,8 +2,9 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { BASE_URL, API_BASE_URL } from '../../config';
 
-const API_URL = 'http://localhost:5000/api/menu';
+const API_URL = `${API_BASE_URL}/menu`;
 
 export const MenuAdmin = () => {
     const { token, isAdmin } = useAuth();
@@ -85,7 +86,7 @@ export const MenuAdmin = () => {
 
     // Lógica de filtrado de platos por búsqueda
     const platosFiltrados = useMemo(() => {
-        return platos.filter(plato => 
+        return platos.filter(plato =>
             plato.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
             plato.categoria.toLowerCase().includes(busqueda.toLowerCase()) ||
             plato.descripcion.toLowerCase().includes(busqueda.toLowerCase())
@@ -126,7 +127,7 @@ export const MenuAdmin = () => {
                     'x-auth-token': token
                 }
             };
-            const res = await axios.post('http://localhost:5000/api/menu/upload', uploadData, config);
+            const res = await axios.post(`${API_BASE_URL}/menu/upload`, uploadData, config);
             const returnedUrl = res.data.imageUrl;
 
             if (isEditing) {
@@ -186,12 +187,12 @@ export const MenuAdmin = () => {
         try {
             const config = { headers: { 'Content-Type': 'application/json', 'x-auth-token': token } };
             const res = await axios.put(`${API_URL}/${plato._id}`, { ...plato, disponible: nuevoEstado }, config);
-            
+
             // Actualizar localmente
             setPlatos(prev => prev.map(p => p._id === plato._id ? res.data.plato : p));
-            setMensaje({ 
-                texto: `Plato "${plato.nombre}" ${nuevoEstado ? 'marcado como visible' : 'oculto de la carta'} correctamente.`, 
-                tipo: 'success' 
+            setMensaje({
+                texto: `Plato "${plato.nombre}" ${nuevoEstado ? 'marcado como visible' : 'oculto de la carta'} correctamente.`,
+                tipo: 'success'
             });
             setTimeout(() => setMensaje({ texto: '', tipo: '' }), 4000);
         } catch (err) {
@@ -213,7 +214,7 @@ export const MenuAdmin = () => {
                 precio: parseFloat(editingPlato.precio) || 0
             };
             const res = await axios.put(`${API_URL}/${editingPlato._id}`, finalData, config);
-            
+
             setMensaje({ texto: 'Plato actualizado correctamente.', tipo: 'success' });
             setPlatos(prev => prev.map(p => p._id === editingPlato._id ? res.data.plato : p));
             setEditingPlato(null); // Cerrar modal
@@ -262,7 +263,7 @@ export const MenuAdmin = () => {
                         </button>
                     )}
                 </div>
-                
+
                 <div className="card-body">
                     {/* Mensaje de estado */}
                     {mensaje.texto && (
@@ -275,7 +276,7 @@ export const MenuAdmin = () => {
                     {/* Navegación por Pestañas de Bootstrap */}
                     <ul className="nav nav-tabs mb-4">
                         <li className="nav-item">
-                            <button 
+                            <button
                                 className={`nav-link fs-6 fw-semibold py-2 px-3 ${activeTab === 'agregar' ? 'active' : ''}`}
                                 onClick={() => setSearchParams({ tab: 'agregar' })}
                             >
@@ -283,7 +284,7 @@ export const MenuAdmin = () => {
                             </button>
                         </li>
                         <li className="nav-item">
-                            <button 
+                            <button
                                 className={`nav-link fs-6 fw-semibold py-2 px-3 ${activeTab === 'editar' ? 'active' : ''}`}
                                 onClick={() => setSearchParams({ tab: 'editar' })}
                             >
@@ -291,7 +292,7 @@ export const MenuAdmin = () => {
                             </button>
                         </li>
                         <li className="nav-item">
-                            <button 
+                            <button
                                 className={`nav-link fs-6 fw-semibold py-2 px-3 ${activeTab === 'eliminar' ? 'active' : ''}`}
                                 onClick={() => setSearchParams({ tab: 'eliminar' })}
                             >
@@ -306,20 +307,20 @@ export const MenuAdmin = () => {
                             <div className="row g-3">
                                 <div className="col-md-6">
                                     <label className="form-label fw-bold text-secondary">Nombre del Plato</label>
-                                    <input 
-                                        type="text" 
-                                        className="form-control form-control-lg border-secondary-subtle" 
-                                        required 
-                                        value={formData.nombre} 
-                                        onChange={e => setFormData({ ...formData, nombre: e.target.value })} 
+                                    <input
+                                        type="text"
+                                        className="form-control form-control-lg border-secondary-subtle"
+                                        required
+                                        value={formData.nombre}
+                                        onChange={e => setFormData({ ...formData, nombre: e.target.value })}
                                     />
                                 </div>
                                 <div className="col-md-6">
                                     <label className="form-label fw-bold text-secondary">Categoría</label>
-                                    <select 
-                                        className="form-select form-select-lg border-secondary-subtle" 
-                                        required 
-                                        value={formData.categoria} 
+                                    <select
+                                        className="form-select form-select-lg border-secondary-subtle"
+                                        required
+                                        value={formData.categoria}
                                         onChange={e => setFormData({ ...formData, categoria: e.target.value })}
                                     >
                                         <option value="">Selecciona una categoría</option>
@@ -330,23 +331,23 @@ export const MenuAdmin = () => {
                                 </div>
                                 <div className="col-md-6">
                                     <label className="form-label fw-bold text-secondary">Precio ($)</label>
-                                    <input 
-                                        type="number" 
-                                        className="form-control form-control-lg border-secondary-subtle" 
-                                        required 
+                                    <input
+                                        type="number"
+                                        className="form-control form-control-lg border-secondary-subtle"
+                                        required
                                         min="0"
-                                        value={formData.precio} 
-                                        onChange={e => setFormData({ ...formData, precio: e.target.value === '' ? '' : (parseFloat(e.target.value) || 0) })} 
+                                        value={formData.precio}
+                                        onChange={e => setFormData({ ...formData, precio: e.target.value === '' ? '' : (parseFloat(e.target.value) || 0) })}
                                     />
                                 </div>
                                 <div className="col-md-6">
                                     <label className="form-label fw-bold text-secondary">Imagen (.png)</label>
                                     <div className="d-flex align-items-center gap-2">
-                                        <input 
+                                        <input
                                             id="imagen-file-input"
-                                            type="file" 
-                                            className="form-control form-control-lg border-secondary-subtle" 
-                                            required 
+                                            type="file"
+                                            className="form-control form-control-lg border-secondary-subtle"
+                                            required
                                             accept="image/png"
                                             onChange={(e) => handleImageUpload(e, false)}
                                             disabled={subiendoImg}
@@ -358,9 +359,9 @@ export const MenuAdmin = () => {
                                     {formData.imagen && (
                                         <div className="mt-3">
                                             <span className="d-block text-muted small mb-1">Vista Previa:</span>
-                                            <img 
-                                                src={formData.imagen} 
-                                                alt="Previsualización" 
+                                            <img
+                                                src={formData.imagen}
+                                                alt="Previsualización"
                                                 className="img-thumbnail rounded shadow-sm"
                                                 style={{ maxHeight: '120px', maxWidth: '200px', objectFit: 'cover' }}
                                             />
@@ -369,12 +370,12 @@ export const MenuAdmin = () => {
                                 </div>
                                 <div className="col-12">
                                     <label className="form-label fw-bold text-secondary">Descripción</label>
-                                    <textarea 
-                                        className="form-control border-secondary-subtle" 
+                                    <textarea
+                                        className="form-control border-secondary-subtle"
                                         rows="3"
-                                        required 
-                                        value={formData.descripcion} 
-                                        onChange={e => setFormData({ ...formData, disponible: true, descripcion: e.target.value })} 
+                                        required
+                                        value={formData.descripcion}
+                                        onChange={e => setFormData({ ...formData, disponible: true, descripcion: e.target.value })}
                                     />
                                 </div>
                                 <div className="col-12 mt-4">
@@ -404,10 +405,10 @@ export const MenuAdmin = () => {
                                     <div className="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3 p-2 bg-light rounded border border-light-subtle">
                                         <div className="d-flex align-items-center gap-2 flex-grow-1" style={{ maxWidth: '400px' }}>
                                             <span className="text-secondary fw-semibold text-nowrap">🔍 Buscar:</span>
-                                            <input 
-                                                type="text" 
-                                                className="form-control form-control-sm border-secondary-subtle" 
-                                                placeholder="Buscar por nombre, categoría, descripción..." 
+                                            <input
+                                                type="text"
+                                                className="form-control form-control-sm border-secondary-subtle"
+                                                placeholder="Buscar por nombre, categoría, descripción..."
                                                 value={busqueda}
                                                 onChange={(e) => {
                                                     setBusqueda(e.target.value);
@@ -417,8 +418,8 @@ export const MenuAdmin = () => {
                                         </div>
                                         <div className="d-flex align-items-center gap-2">
                                             <span className="text-secondary fw-semibold">Mostrar:</span>
-                                            <select 
-                                                className="form-select form-select-sm border-secondary-subtle" 
+                                            <select
+                                                className="form-select form-select-sm border-secondary-subtle"
                                                 style={{ width: '80px' }}
                                                 value={limite}
                                                 onChange={(e) => {
@@ -453,30 +454,30 @@ export const MenuAdmin = () => {
                                                     {platosPaginados.map(plato => (
                                                         <tr key={plato._id} style={{ opacity: plato.disponible === false ? 0.6 : 1 }}>
                                                             <td>
-                                                                <img 
-                                                                    src={plato.imagen.startsWith('http') ? plato.imagen : `http://localhost:5000/${plato.imagen}`} 
-                                                                    alt={plato.nombre} 
+                                                                <img
+                                                                    src={plato.imagen.startsWith('http') ? plato.imagen : `${BASE_URL}/${plato.imagen}`}
+                                                                    alt={plato.nombre}
                                                                     className="rounded shadow-sm"
                                                                     style={{ width: '55px', height: '55px', objectFit: 'cover', border: '1px solid #ddd' }}
                                                                     onError={(e) => { e.target.src = 'https://via.placeholder.com/55?text=Plato'; }}
                                                                 />
                                                             </td>
                                                             <td className="fw-semibold">
-                                                                {plato.nombre} 
+                                                                {plato.nombre}
                                                                 {plato.disponible === false && <span className="badge bg-secondary ms-2">Oculto</span>}
                                                             </td>
                                                             <td className="text-capitalize">{plato.categoria}</td>
                                                             <td>${plato.precio.toLocaleString('es-CL')}</td>
                                                             <td className="text-center">
                                                                 <div className="d-flex gap-2 justify-content-center">
-                                                                    <button 
-                                                                        onClick={() => setEditingPlato({ ...plato })} 
+                                                                    <button
+                                                                        onClick={() => setEditingPlato({ ...plato })}
                                                                         className="btn btn-sm btn-primary fw-bold"
                                                                     >
                                                                         Editar
                                                                     </button>
-                                                                    <button 
-                                                                        onClick={() => handleToggleDisponible(plato)} 
+                                                                    <button
+                                                                        onClick={() => handleToggleDisponible(plato)}
                                                                         className={`btn btn-sm fw-bold ${plato.disponible === false ? 'btn-success' : 'btn-warning'}`}
                                                                         title={plato.disponible === false ? 'Hacer visible en la carta' : 'Ocultar temporalmente de la carta'}
                                                                     >
@@ -543,10 +544,10 @@ export const MenuAdmin = () => {
                                     <div className="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3 p-2 bg-light rounded border border-light-subtle">
                                         <div className="d-flex align-items-center gap-2 flex-grow-1" style={{ maxWidth: '400px' }}>
                                             <span className="text-secondary fw-semibold text-nowrap">🔍 Buscar:</span>
-                                            <input 
-                                                type="text" 
-                                                className="form-control form-control-sm border-secondary-subtle" 
-                                                placeholder="Buscar por nombre, categoría, descripción..." 
+                                            <input
+                                                type="text"
+                                                className="form-control form-control-sm border-secondary-subtle"
+                                                placeholder="Buscar por nombre, categoría, descripción..."
                                                 value={busqueda}
                                                 onChange={(e) => {
                                                     setBusqueda(e.target.value);
@@ -556,8 +557,8 @@ export const MenuAdmin = () => {
                                         </div>
                                         <div className="d-flex align-items-center gap-2">
                                             <span className="text-secondary fw-semibold">Mostrar:</span>
-                                            <select 
-                                                className="form-select form-select-sm border-secondary-subtle" 
+                                            <select
+                                                className="form-select form-select-sm border-secondary-subtle"
                                                 style={{ width: '80px' }}
                                                 value={limite}
                                                 onChange={(e) => {
@@ -592,9 +593,9 @@ export const MenuAdmin = () => {
                                                     {platosPaginados.map(plato => (
                                                         <tr key={plato._id} style={{ opacity: plato.disponible === false ? 0.6 : 1 }}>
                                                             <td>
-                                                                <img 
-                                                                    src={plato.imagen.startsWith('http') ? plato.imagen : `http://localhost:5000/${plato.imagen}`} 
-                                                                    alt={plato.nombre} 
+                                                                <img
+                                                                    src={plato.imagen.startsWith('http') ? plato.imagen : `${BASE_URL}/${plato.imagen}`}
+                                                                    alt={plato.nombre}
                                                                     className="rounded shadow-sm"
                                                                     style={{ width: '55px', height: '55px', objectFit: 'cover', border: '1px solid #ddd' }}
                                                                     onError={(e) => { e.target.src = 'https://via.placeholder.com/55?text=Plato'; }}
@@ -607,8 +608,8 @@ export const MenuAdmin = () => {
                                                             <td className="text-capitalize">{plato.categoria}</td>
                                                             <td>${plato.precio.toLocaleString('es-CL')}</td>
                                                             <td className="text-center">
-                                                                <button 
-                                                                    onClick={() => handleEliminarPlato(plato._id)} 
+                                                                <button
+                                                                    onClick={() => handleEliminarPlato(plato._id)}
                                                                     className="btn btn-sm btn-danger px-3 fw-bold"
                                                                 >
                                                                     Eliminar
@@ -665,10 +666,10 @@ export const MenuAdmin = () => {
                             <div className="modal-content">
                                 <div className="modal-header bg-dark text-white">
                                     <h5 className="modal-title">Editar Plato: {editingPlato.nombre}</h5>
-                                    <button 
-                                        type="button" 
-                                        className="btn-close btn-close-white" 
-                                        onClick={() => setEditingPlato(null)} 
+                                    <button
+                                        type="button"
+                                        className="btn-close btn-close-white"
+                                        onClick={() => setEditingPlato(null)}
                                         aria-label="Close"
                                     ></button>
                                 </div>
@@ -678,9 +679,9 @@ export const MenuAdmin = () => {
                                             {/* Vista Previa de Imagen Actual / Nueva */}
                                             <div className="col-12 text-center mb-2">
                                                 <span className="d-block text-muted small mb-1">Imagen del Plato:</span>
-                                                <img 
-                                                    src={editingPlato.imagen.startsWith('http') ? editingPlato.imagen : `http://localhost:5000/${editingPlato.imagen}`} 
-                                                    alt="Vista previa" 
+                                                <img
+                                                    src={editingPlato.imagen.startsWith('http') ? editingPlato.imagen : `${BASE_URL}/${editingPlato.imagen}`}
+                                                    alt="Vista previa"
                                                     className="img-thumbnail rounded"
                                                     style={{ maxHeight: '140px', objectFit: 'cover' }}
                                                     onError={(e) => { e.target.src = 'https://via.placeholder.com/140?text=Plato'; }}
@@ -689,20 +690,20 @@ export const MenuAdmin = () => {
 
                                             <div className="col-md-6">
                                                 <label className="form-label fw-bold text-secondary">Nombre del Plato</label>
-                                                <input 
-                                                    type="text" 
-                                                    className="form-control border-secondary-subtle" 
-                                                    required 
-                                                    value={editingPlato.nombre} 
-                                                    onChange={e => setEditingPlato({ ...editingPlato, nombre: e.target.value })} 
+                                                <input
+                                                    type="text"
+                                                    className="form-control border-secondary-subtle"
+                                                    required
+                                                    value={editingPlato.nombre}
+                                                    onChange={e => setEditingPlato({ ...editingPlato, nombre: e.target.value })}
                                                 />
                                             </div>
                                             <div className="col-md-6">
                                                 <label className="form-label fw-bold text-secondary">Categoría</label>
-                                                <select 
-                                                    className="form-select border-secondary-subtle" 
-                                                    required 
-                                                    value={editingPlato.categoria} 
+                                                <select
+                                                    className="form-select border-secondary-subtle"
+                                                    required
+                                                    value={editingPlato.categoria}
                                                     onChange={e => setEditingPlato({ ...editingPlato, categoria: e.target.value })}
                                                 >
                                                     <option value="">Selecciona una categoría</option>
@@ -713,23 +714,23 @@ export const MenuAdmin = () => {
                                             </div>
                                             <div className="col-md-6">
                                                 <label className="form-label fw-bold text-secondary">Precio ($)</label>
-                                                <input 
-                                                    type="number" 
-                                                    className="form-control border-secondary-subtle" 
-                                                    required 
+                                                <input
+                                                    type="number"
+                                                    className="form-control border-secondary-subtle"
+                                                    required
                                                     min="0"
-                                                    value={editingPlato.precio} 
-                                                    onChange={e => setEditingPlato({ ...editingPlato, precio: e.target.value === '' ? '' : (parseFloat(e.target.value) || 0) })} 
+                                                    value={editingPlato.precio}
+                                                    onChange={e => setEditingPlato({ ...editingPlato, precio: e.target.value === '' ? '' : (parseFloat(e.target.value) || 0) })}
                                                 />
                                             </div>
                                             <div className="col-md-6">
                                                 <label className="form-label fw-bold text-secondary">Actualizar Imagen (.png)</label>
                                                 <div className="d-flex align-items-center gap-2">
-                                                    <input 
-                                                        type="file" 
-                                                        className="form-control border-secondary-subtle" 
-                                                        accept="image/png" 
-                                                        onChange={(e) => handleImageUpload(e, true)} 
+                                                    <input
+                                                        type="file"
+                                                        className="form-control border-secondary-subtle"
+                                                        accept="image/png"
+                                                        onChange={(e) => handleImageUpload(e, true)}
                                                         disabled={subiendoImg}
                                                     />
                                                     {subiendoImg && (
@@ -739,25 +740,25 @@ export const MenuAdmin = () => {
                                             </div>
                                             <div className="col-12">
                                                 <label className="form-label fw-bold text-secondary">Descripción</label>
-                                                <textarea 
-                                                    className="form-control border-secondary-subtle" 
+                                                <textarea
+                                                    className="form-control border-secondary-subtle"
                                                     rows="3"
-                                                    required 
-                                                    value={editingPlato.descripcion} 
-                                                    onChange={e => setEditingPlato({ ...editingPlato, descripcion: e.target.value })} 
+                                                    required
+                                                    value={editingPlato.descripcion}
+                                                    onChange={e => setEditingPlato({ ...editingPlato, descripcion: e.target.value })}
                                                 />
                                             </div>
-                                            
+
                                             {/* Control de Disponibilidad en el modal */}
                                             <div className="col-12 mt-3">
                                                 <div className="form-check form-switch">
-                                                    <input 
-                                                        type="checkbox" 
-                                                        className="form-check-input border-secondary-subtle" 
+                                                    <input
+                                                        type="checkbox"
+                                                        className="form-check-input border-secondary-subtle"
                                                         id="disponible-checkbox"
                                                         style={{ cursor: 'pointer' }}
                                                         checked={editingPlato.disponible !== false}
-                                                        onChange={e => setEditingPlato({ ...editingPlato, disponible: e.target.checked })} 
+                                                        onChange={e => setEditingPlato({ ...editingPlato, disponible: e.target.checked })}
                                                     />
                                                     <label className="form-check-label fw-bold text-secondary" htmlFor="disponible-checkbox" style={{ cursor: 'pointer' }}>
                                                         Disponible para la venta (Si se desactiva, se ocultará de la vista pública de clientes)

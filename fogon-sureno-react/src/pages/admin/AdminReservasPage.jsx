@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../../config';
 
 const formatFecha = (fechaString) => {
     if (!fechaString) return '';
@@ -36,7 +37,7 @@ const AdminReservasPage = () => {
                 headers: { 'x-auth-token': token },
                 signal: signal
             };
-            const res = await axios.get('http://localhost:5000/api/reservas', config);
+            const res = await axios.get(`${API_BASE_URL}/reservas`, config);
             setReservas(res.data);
         } catch (err) {
             if (axios.isCancel(err)) {
@@ -71,7 +72,7 @@ const AdminReservasPage = () => {
         try {
             const config = { headers: { 'x-auth-token': token } };
             // Enviamos la petición DELETE con el ID de la reserva
-            await axios.delete(`http://localhost:5000/api/reservas/${id}`, config);
+            await axios.delete(`${API_BASE_URL}/reservas/${id}`, config);
 
             // Si el backend responde bien, la quitamos del estado local
             setReservas(prev => prev.filter(reserva => reserva._id !== id));

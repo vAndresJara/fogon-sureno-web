@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URL } from '../config';
 
 export const ReservaPage = () => {
   const { token, nombreUsuario } = useAuth();
@@ -9,7 +10,7 @@ export const ReservaPage = () => {
     personas: 2,
     zonaId: ''
   });
-  
+
   const [zonasDisponibles, setZonasDisponibles] = useState([]);
   const [buscandoZonas, setBuscandoZonas] = useState(false);
   const [errorZonas, setErrorZonas] = useState('');
@@ -26,7 +27,7 @@ export const ReservaPage = () => {
 
     const checkPerfil = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/users/profile', {
+        const res = await fetch(`${API_BASE_URL}/users/profile`, {
           headers: { 'x-auth-token': token }
         });
         const data = await res.json();
@@ -57,7 +58,7 @@ export const ReservaPage = () => {
       setBuscandoZonas(true);
       setErrorZonas('');
       try {
-        const res = await fetch(`http://localhost:5000/api/zonas/disponibles?fecha=${formData.fecha}&personas=${formData.personas}`, {
+        const res = await fetch(`${API_BASE_URL}/zonas/disponibles?fecha=${formData.fecha}&personas=${formData.personas}`, {
           headers: { 'x-auth-token': token }
         });
         const data = await res.json();
@@ -99,9 +100,9 @@ export const ReservaPage = () => {
     setEnviando(true);
     setMensaje('');
     try {
-      const response = await fetch('http://localhost:5000/api/reservas', {
+      const response = await fetch(`${API_BASE_URL}/reservas`, {
         method: 'POST',
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
           'x-auth-token': token
         },
@@ -155,7 +156,7 @@ export const ReservaPage = () => {
             </p>
 
             {mensaje && (
-              <p className="mensaje-status" style={{ 
+              <p className="mensaje-status" style={{
                 backgroundColor: mensaje.startsWith('Error') ? '#fee2e2' : '#d1fae5',
                 color: mensaje.startsWith('Error') ? '#991b1b' : '#065f46',
                 textAlign: 'center'
@@ -163,17 +164,17 @@ export const ReservaPage = () => {
                 {mensaje}
               </p>
             )}
-            
+
             <form className="reserva-form" onSubmit={handleSubmit}>
               <div className="form-group">
                 <label>Fecha de Reserva:</label>
-                <input type="date" min={hoy} required value={formData.fecha} onChange={e => setFormData({...formData, fecha: e.target.value})} />
+                <input type="date" min={hoy} required value={formData.fecha} onChange={e => setFormData({ ...formData, fecha: e.target.value })} />
               </div>
               <div className="form-group">
                 <label>N° Personas:</label>
-                <input type="number" min="1" max="15" required value={formData.personas} onChange={e => setFormData({...formData, personas: parseInt(e.target.value) || 1})} />
+                <input type="number" min="1" max="15" required value={formData.personas} onChange={e => setFormData({ ...formData, personas: parseInt(e.target.value) || 1 })} />
               </div>
-              
+
               <div className="form-group">
                 <label>Zona disponible:</label>
                 {buscandoZonas ? (
@@ -203,9 +204,9 @@ export const ReservaPage = () => {
                 )}
               </div>
 
-              <button 
-                type="submit" 
-                className="btn-agregar" 
+              <button
+                type="submit"
+                className="btn-agregar"
                 disabled={enviando || buscandoZonas || !formData.zonaId}
                 style={{ opacity: (enviando || buscandoZonas || !formData.zonaId) ? 0.6 : 1, cursor: (enviando || buscandoZonas || !formData.zonaId) ? 'not-allowed' : 'pointer', marginTop: '1rem' }}
               >

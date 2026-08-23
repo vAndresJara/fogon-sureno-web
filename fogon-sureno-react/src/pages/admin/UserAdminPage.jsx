@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../../config';
 
 const formatFecha = (fechaString) => {
     if (!fechaString) return '';
@@ -35,7 +36,7 @@ export const UserAdminPage = () => {
                 headers: { 'x-auth-token': token },
                 signal: signal
             };
-            const res = await axios.get('http://localhost:5000/api/users', config);
+            const res = await axios.get(`${API_BASE_URL}/users`, config);
             setUsuarios(res.data);
         } catch (err) {
             if (axios.isCancel(err)) {
@@ -90,7 +91,7 @@ export const UserAdminPage = () => {
         setMensajeExito('');
         try {
             const config = { headers: { 'Content-Type': 'application/json', 'x-auth-token': token } };
-            const res = await axios.put(`http://localhost:5000/api/users/${editingUsuario._id}`, {
+            const res = await axios.put(`${API_BASE_URL}/users/${editingUsuario._id}`, {
                 nombre: editingUsuario.nombre,
                 telefono: formattedPhone,
                 role: editingUsuario.role
@@ -119,7 +120,7 @@ export const UserAdminPage = () => {
         setMensajeExito('');
         try {
             const config = { headers: { 'x-auth-token': token } };
-            await axios.delete(`http://localhost:5000/api/users/${id}`, config);
+            await axios.delete(`${API_BASE_URL}/users/${id}`, config);
 
             // Actualizar estado local
             setUsuarios(prev => prev.filter(u => u._id !== id));
