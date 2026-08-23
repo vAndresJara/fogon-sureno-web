@@ -88,7 +88,7 @@ function AppContent() {
                   <button
                     key={cat}
                     className={`btn-filtro ${categoria === cat ? 'activo' : ''}`}
-                    onClick={() => setCategoria(cat)}
+                    onClick={() => setCategoria(categoria === cat ? 'todos' : cat)}
                   >
                     {cat === 'favoritos' ? '❤️ Mis Favoritos' : cat.charAt(0).toUpperCase() + cat.slice(1)}
                   </button>

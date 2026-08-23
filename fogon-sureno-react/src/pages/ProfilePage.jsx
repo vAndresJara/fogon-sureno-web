@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 
 export const ProfilePage = () => {
     const { token, setToken } = useAuth();
@@ -23,7 +24,7 @@ export const ProfilePage = () => {
         const fetchProfile = async () => {
             try {
                 const config = { headers: { 'x-auth-token': token } };
-                const res = await axios.get('http://localhost:5000/api/users/profile', config);
+                const res = await axios.get(`${API_BASE_URL}/users/profile`, config);
                 setEmail(res.data.email);
                 setNombre(res.data.nombre || '');
                 setTelefono(res.data.telefono || '');
@@ -83,8 +84,8 @@ export const ProfilePage = () => {
 
         try {
             const config = { headers: { 'Content-Type': 'application/json', 'x-auth-token': token } };
-            const res = await axios.put('http://localhost:5000/api/users/profile', { nombre, telefono: formattedPhone }, config);
-            
+            const res = await axios.put(`${API_BASE_URL}/users/profile`, { nombre, telefono: formattedPhone }, config);
+
             // Actualizar el token local en el contexto si se devolvió uno nuevo
             if (res.data.token) {
                 setToken(res.data.token);
@@ -132,38 +133,38 @@ export const ProfilePage = () => {
                     <form className="reserva-form" onSubmit={handleSubmit}>
                         <div className="form-group">
                             <label>Correo Electrónico:</label>
-                            <input 
-                                type="email" 
-                                value={email} 
-                                disabled 
+                            <input
+                                type="email"
+                                value={email}
+                                disabled
                                 style={{ backgroundColor: '#f3f4f6', color: '#6b7280', cursor: 'not-allowed' }}
                             />
                         </div>
                         <div className="form-group">
                             <label>Nombre Completo:</label>
-                            <input 
-                                type="text" 
-                                required 
-                                value={nombre} 
-                                onChange={e => setNombre(e.target.value)} 
+                            <input
+                                type="text"
+                                required
+                                value={nombre}
+                                onChange={e => setNombre(e.target.value)}
                                 placeholder="Ej: Juan Pérez"
                             />
                         </div>
                         <div className="form-group">
                             <label>Teléfono de Contacto:</label>
-                            <input 
-                                type="tel" 
-                                required 
-                                value={telefono} 
-                                onChange={e => handlePhoneChange(e.target.value)} 
+                            <input
+                                type="tel"
+                                required
+                                value={telefono}
+                                onChange={e => handlePhoneChange(e.target.value)}
                                 onBlur={handlePhoneBlur}
                                 placeholder="Ej: +56 9 1234 5678"
                             />
                         </div>
 
-                        <button 
-                            type="submit" 
-                            className="btn-agregar" 
+                        <button
+                            type="submit"
+                            className="btn-agregar"
                             disabled={guardando}
                             style={{ marginTop: '1.5rem', width: '100%' }}
                         >

@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { API_BASE_URL } from '../config';
+
 // Custom Hook para obtener el menú desde el backend
 export const useMenu = () => {
   // Estados para almacenar los platos y el estado de carga
@@ -10,9 +12,9 @@ export const useMenu = () => {
     // Función asíncrona para obtener el menú desde el backend
     const cargarMenu = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/menu');
+        const response = await fetch(`${API_BASE_URL}/menu`);
         const data = await response.json();
-        
+
         // Mapear id defensivamente para evitar problemas si viene _id desde MongoDB
         const platosMapeados = data.map(plato => ({
           ...plato,
