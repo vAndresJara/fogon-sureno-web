@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { body, param, validationResult } = require('express-validator');
 const User = require('../models/User');
+const { sendResetPasswordEmail } = require('../services/emailService');
 
 // Helper: responde con los errores de validación si los hay.
 const checkValidation = (req, res) => {
@@ -113,15 +114,11 @@ router.post(
                 user.resetPasswordExpires = Date.now() + 60 * 60 * 1000; // 1 hora
                 await user.save();
 
-                // En un entorno real, aquí enviaríamos un correo al usuario con el enlace de reseteo.
+                // Enviar el correo electrónico con el enlace de restablecimiento
                 const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
                 const resetUrl = `${clientUrl}/reset-password/${resetToken}`;
 
-                // MODO DESARROLLO: en lugar de enviar un correo, mostramos el enlace en la consola.
-                console.log('\n==================== RECUPERACIÓN DE CONTRASEÑA ====================');
-                console.log(`Usuario: ${email}`);
-                console.log(`Enlace de reseteo (válido por 1 hora):\n${resetUrl}`);
-                console.log('===================================================================\n');
+                await sendResetPasswordEmail(email, resetUrl);
             }
 
             // Respuesta genérica para no revelar qué correos están registrados.

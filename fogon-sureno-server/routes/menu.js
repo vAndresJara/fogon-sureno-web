@@ -46,8 +46,10 @@ router.post('/upload', authMiddleware, isAdmin, upload.single('imagen'), (req, r
     if (!req.file) {
         return res.status(400).json({ error: 'No se ha proporcionado ninguna imagen o el archivo no es PNG.' });
     }
-    // Retornar la URL pública de la imagen
-    const imageUrl = `http://localhost:5000/uploads/${req.file.filename}`;
+    // Retornar la URL pública de la imagen dinámicamente basada en el host que realiza la petición
+    const host = req.get('host');
+    const protocol = req.protocol;
+    const imageUrl = `${protocol}://${host}/uploads/${req.file.filename}`;
     res.json({ imageUrl });
 }, (error, req, res, next) => {
     // Manejar errores lanzados por el filtro de multer
@@ -94,7 +96,18 @@ router.get('/', async (req, res) => {
         }
 
         const menuData = await MenuItem.find(query);
-        res.json(menuData);
+        
+        // Reemplazar dinámicamente 'localhost:5000' en las URLs de imágenes por el host de la petición
+        const host = req.get('host');
+        const mappedMenuData = menuData.map(item => {
+            const itemObj = item.toObject();
+            if (itemObj.imagen && itemObj.imagen.includes('localhost:5000')) {
+                itemObj.imagen = itemObj.imagen.replace('localhost:5000', host);
+            }
+            return itemObj;
+        });
+        
+        res.json(mappedMenuData);
     } catch (error) {
         res.status(500).json({ error: 'No se pudo obtener el menú' });
     }
